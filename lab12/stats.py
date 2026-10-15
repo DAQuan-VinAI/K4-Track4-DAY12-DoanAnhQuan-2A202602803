@@ -14,7 +14,10 @@ def wilson(k, n, z=1.96):
     d = 1 + z ** 2 / n
     centre = (p + z ** 2 / (2 * n)) / d
     half = z * np.sqrt(p * (1 - p) / n + z ** 2 / (4 * n ** 2)) / d
-    return float(max(0.0, centre - half)), float(min(1.0, centre + half))
+    # k = 0 and k = n must hit the bounds exactly, not 1 - 1e-16 from rounding
+    lo = 0.0 if k == 0 else max(0.0, centre - half)
+    hi = 1.0 if k == n else min(1.0, centre + half)
+    return float(lo), float(hi)
 
 
 def rate(flags):
