@@ -25,7 +25,10 @@
 ## Câu 1 · Dữ liệu
 Bước 0 bạn phát hiện những vấn đề gì ở dữ liệu? Vì sao không dùng cột `Acc_LV`, và bạn thay bằng gì? Bao nhiêu quỹ đạo bị loại vì trùng, và vì sao chia theo quỹ đạo?
 
-Ba vấn đề. **(1) Cột `Acc_LV` không dùng được:** tương quan của nó với đạo hàm của `Speed_LV` chỉ **0,045**, trong khi cột tương ứng của xe theo sau đạt **0,929**. Nếu khai thác ca phanh bằng `Acc_LV` thì sẽ bắt toàn nhiễu, nên tôi dùng gia tốc tính lại từ tốc độ xe dẫn đã làm mượt (`a_lead`). **(2) Quỹ đạo trùng hệt nhau:** có **383** quỹ đạo trùng (9993 → 9610), nằm ở các id cách xa nhau. Chia ngẫu nhiên thì một bản có thể rơi vào train và bản kia vào test, làm điểm test bị thổi phồng vì mô hình đã "thấy" đúng quỹ đạo đó. **(3) Phải chia theo quỹ đạo, không theo khung:** ở 10 Hz, hai khung liền nhau gần như giống hệt. Chia theo khung thì khung test luôn có "hàng xóm" trong train, nên đó là rò rỉ chứ không phải tổng quát hoá. Cột `Spatial_Gap` thì đáng tin: nó đúng bằng hiệu vị trí trừ một độ lệch hằng 4,5 m (chiều dài xe).
+3 vấn đề. 
+1) **Cột `Acc_LV` không dùng được:** tương quan của nó với đạo hàm của `Speed_LV` chỉ **0,045**, trong khi cột tương ứng của xe theo sau đạt **0,929**. Nếu khai thác ca phanh bằng `Acc_LV` thì sẽ bắt toàn nhiễu, nên tôi dùng gia tốc tính lại từ tốc độ xe dẫn đã làm mượt (`a_lead`). 
+2) **Quỹ đạo trùng hệt nhau:** có **383** quỹ đạo trùng (9993 → 9610), nằm ở các id cách xa nhau. Chia ngẫu nhiên thì một bản có thể rơi vào train và bản kia vào test, làm điểm test bị thổi phồng vì mô hình đã "thấy" đúng quỹ đạo đó. 
+3) **Phải chia theo quỹ đạo, không theo khung:** ở 10 Hz, hai khung liền nhau gần như giống hệt. Chia theo khung thì khung test luôn có "hàng xóm" trong train, nên đó là rò rỉ chứ không phải tổng quát hoá. Cột `Spatial_Gap` thì đáng tin: nó đúng bằng hiệu vị trí trừ một độ lệch hằng 4,5 m (chiều dài xe).
 
 ## Câu 2 · Phát lại
 Bản refactor float32 khác bit ở bao nhiêu đoạn, vượt dung sai ở bao nhiêu? Thay đổi AEB làm lệch bao nhiêu đoạn, và vì sao lệch ở đúng những khung đó (mở một đoạn ra xem)? Phát theo thời gian thật làm lộ ra điều gì mà phát nhanh nhất che đi?
